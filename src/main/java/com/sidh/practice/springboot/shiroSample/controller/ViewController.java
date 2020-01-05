@@ -30,17 +30,17 @@ public class ViewController {
                 buildButton3();
     }
 
-    @RequiresPermissions("button3:view")
+//    @RequiresPermissions("button3:view")
     private String buildButton3() {
         return HtmlUtils.button("button c");
     }
 
-    @RequiresPermissions("button2:view")
+//    @RequiresPermissions("button2:view")
     private String buildButton2() {
         return HtmlUtils.button("button b");
     }
 
-    @RequiresPermissions("button1:view")
+//    @RequiresPermissions("button1:view")
     private String buildButton1() {
         return HtmlUtils.button("button a");
     }
