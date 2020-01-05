@@ -1,9 +1,10 @@
 package com.sidh.practice.springboot.shiroSample.controller;
 
-import com.sidh.practice.springboot.shiroSample.view.HtmlUtils;
+import com.sidh.practice.springboot.shiroSample.service.PageBuilder;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,8 @@ import java.io.IOException;
 
 @RestController
 public class ViewController {
+    @Autowired
+    PageBuilder pageBuilder;
 
     @GetMapping(value = "/page", produces = MediaType.TEXT_HTML_VALUE)
     public String page(HttpServletResponse response) throws IOException {
@@ -25,23 +28,24 @@ public class ViewController {
     }
 
     public String buildPage() {
-        return buildButton1() +
-                buildButton2() +
-                buildButton3();
-    }
+        String s = "";
 
-//    @RequiresPermissions("button3:view")
-    private String buildButton3() {
-        return HtmlUtils.button("button c");
-    }
+        try {
+            s += pageBuilder.buildButton1();
+        } catch (UnauthorizedException e) {
 
-//    @RequiresPermissions("button2:view")
-    private String buildButton2() {
-        return HtmlUtils.button("button b");
-    }
+        }
+        try {
+            s += pageBuilder.buildButton2();
 
-//    @RequiresPermissions("button1:view")
-    private String buildButton1() {
-        return HtmlUtils.button("button a");
+        } catch (UnauthorizedException e) {
+
+        }
+        try {
+            s += pageBuilder.buildButton3();
+        } catch (UnauthorizedException e) {
+
+        }
+        return s;
     }
 }
