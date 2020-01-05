@@ -18,7 +18,7 @@ public class ViewController {
     @GetMapping(value = "/page", produces = MediaType.TEXT_HTML_VALUE)
     public String page(HttpServletResponse response) throws IOException {
         Subject subject = SecurityUtils.getSubject();
-
+        System.out.println("at page: subject principal:" + subject.getPrincipal());
         if (subject.getPrincipal() == null)
             response.sendRedirect("/login.html");
         return buildPage();

@@ -22,6 +22,7 @@ public class ShiroWithSpringBootApplication {
 		dataSource.setUser("sa");
 		dataSource.setPassword("");
 		jdbcRealm.setDataSource(dataSource);
+		jdbcRealm.setPermissionsLookupEnabled(true);
 		return jdbcRealm;
 	}
 
